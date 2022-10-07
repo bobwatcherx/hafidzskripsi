@@ -1,0 +1,116 @@
+@layout('layouts/main')
+@set('title', 'Home page')
+
+@section('body')
+@include("partials/navbar")
+
+<div style="margin:20px">
+	<div class="row">
+		<div class="col s6">
+			<h5>
+<b>Buat Transaksi</b></h5>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s12">
+          
+			<div class="card white z-depth-3"
+			style="border-radius: 10px;
+			border-top: 10px solid orange;"
+			>
+        <div class="card-content ">
+       <form action="/buattransaksi" method="post">
+       	 <div class="row">
+        	<div class="col s5">
+        		 <h6>
+          Nama Barang :</h6>
+		<select 
+		name="nama_barang"
+		required
+		style="width:100%"
+		class="js-example-basic-single" name="state"
+		>
+		  @each(d in dataproduct)
+		  <option value="{{ d.nama_barang }}/{{ d.id }}/{{ d.deskripsi }}/{{ d.harga }}">{{ d.nama_barang }}</option>
+		  @end
+		</select>
+        	</div>
+        	<div class="col s7">
+        	 <div class="input-field col s12">
+    <select id="selectmat" name="pembeli" required>
+      <option value="" disabled selected>Choose your option</option>
+    	@each(d in datapengguna)
+		  <option value="{{ d.id }}/{{ d.nama }}">
+		  <b>{{ d.nama }} </b> 
+		  @if(d.status == "user")
+		 <div style="color:white;background: black;">
+		 	{{ d.status }}
+		 </div>
+		  @end
+		   @if(d.status == "admin")
+		 <div style="color:white;background: red;">
+		 	{{ d.status }}
+		 </div>
+		  @end
+		</option>
+		  @end
+      
+    </select>
+    <label>Pembeli</label>
+  </div>
+       		 </div>
+        <div class="row">
+        	<div class="col s8">
+        		<div class="input-field col s12">
+          <textarea 
+          name="alamat"
+          required 
+          id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Alamat</label>
+        </div>
+        	</div>
+        	<div class="col s4">
+        		tgl kirim
+        		<input type="date" name="tgl_kirim">
+        	</div>
+        </div>
+       	<div class="row">
+       		<div class="col s4">
+       			jumlah :
+       			<input type="number"
+              name="jumlah_brng"
+              value="1"
+              required
+       			>
+       		</div>
+       	</div>
+       	<div class="row">
+       		<div class="col s12">
+       			<button
+       			type="submit"
+       			style="width:100%"
+       			class="btn green darken-2 waves waves-effect"
+       			>
+       				<b>Buat Pemesanan</b>
+       			</button>
+       		</div>
+       	</div>
+        </div>
+       </form>
+      </div>
+		</div>
+		</div>
+	</div>
+
+</div>
+<script>
+	$(document).ready(function() {
+    $('.js-example-basic-single').select2({
+    	 placeholder: "Cari barang",
+    allowClear: true
+    });
+     $('#selectmat').formSelect();
+});
+
+	</script>
+@end

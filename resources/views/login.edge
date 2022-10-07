@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div style="background: purple;height: 100%;color: white;">
+	<div class="container" >
+	<h1 class="is-size-3" 
+	style="text-align: center;"
+	>Login</h1>
+	<br/>
+	<form method="post" action="/login/process">
+		Username :
+	<input class="input is-primary" required type="text" placeholder="Primary input"
+	name="username"
+	>
+	<br/>
+		password :
+	<input class="input is-primary" required type="password" placeholder="Primary input"
+	name="password"
+	>
+	<br/>
+	<button class="button is-info"
+	style="margin:30px"
+	type="submit"
+	>
+		Login
+	</button>
+	<button class="button is-warning"
+	style="margin:30px"
+	onclick="daftarfun()"
+	type="button"
+	>
+		Daftar
+	</button>
+	</form>
+
+</div>
+</div>
+<script>
+	function daftarfun(){
+		 Swal.fire({ 
+		 	showCancelButton: false,
+showConfirmButton: false,
+  focusConfirm: true,
+		 	html: `
+			<h1 class="is-size-3" 
+	style="text-align: center;"
+	>Daftar Akun</h1>
+	<br/> 	
+	<form method="post" action="/daftarpengguna">
+		Username :
+	<input class="input is-primary" type="text" placeholder="Primary input"
+	name = "username"
+	>
+	<br/>
+		password :
+	<input class="input is-primary" type="password" placeholder="Primary input"
+	name = "password"
+	>
+	<br/>
+	<button class="button is-success"
+	style="margin:30px"
+	type="submit"
+	>
+		Daftar
+	</button>
+	</form>
+		 	` 
+		 })
+	}
+	 function disableBack() { window.history.forward(); }
+        setTimeout("disableBack()", 0);
+        window.onunload = function () { null };
+        window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+    window.history.go(1);
+};
+</script>

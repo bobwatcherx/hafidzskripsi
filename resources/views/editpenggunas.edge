@@ -1,0 +1,41 @@
+@layout('layouts/main')
+@set('title', 'Edit penggunas page')
+
+@section('body')
+
+<div class="container" >
+	<a href="{{ route("/") }}" class="button is-danger">
+		Batalkan Edit
+	</a>
+<br/>
+<h1 class="is-size-3">Edit pengguna</h1>
+@each(d in data)
+	<form method="post" action="/editpenggunaproses">
+		<input type="hidden" name="id"
+		value="{{ d.id }}">
+		nama : <input 
+	value="{{ d.nama }}"
+	required
+	name="nama"
+	class="input is-primary" type="text" placeholder="Primary input">
+	<br/>
+		<div 
+		style="margin:20px"
+		class="select">
+  Status : <select required name="status" value="{{ d.status }}">
+    <option value="user">user biasa</option>
+    <option value="admin">admin</option>
+  </select>
+</div>
+	<br/>
+	<br/>
+	<button
+	style="width:100%"
+	 class="button is-info" 
+	type="submit">
+	Update
+	</button>
+	</form>
+@end
+</div>
+@end

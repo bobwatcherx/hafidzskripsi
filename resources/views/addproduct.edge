@@ -1,0 +1,64 @@
+@layout('layouts/main')
+@set('title', 'add product page')
+
+@section('body')
+@include("partials/navbar")
+<div class="container animate__animated animate__slideInRight">
+	<div class="row">
+        <div class="col s3" style="margin-top: 10px;">
+        <a href="{{ route("/") }}"class="btn orange darken-2"
+        >
+              <i class="fa-solid fa-arrow-left"
+          style="font-size: 30px;color: white;"
+          ></i>
+        </a>
+        </div>
+        <div class="col s9">
+            <h1 
+    style="font-size: 25px;
+    font-weight: bold;
+    margin:20px"
+    >Tambah Product</h1>
+        </div>
+    </div>
+   <form method="post" 
+   class="p-5 "
+   action="/processproduct">
+       <div class="input-field col s6">
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate"
+          required
+          name="nama_barang">
+          <label for="nama_barang">nama barang</label>
+    </div>
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate"
+          required
+          name="harga"
+          >
+          <label for="harga">harga</label>
+    </div>
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate"
+          required
+          name="stok"
+          >
+          <label for="stok">Stok</label>
+    </div>
+        <div class="input-field col s6">
+          <input placeholder="Placeholder" id="first_name" type="text" class="validate"
+          required
+          name="deskripsi"
+          >
+          <label for="deskripsi">Deskripsi</label>
+    </div>
+<button type="submit" 
+class="btn  blue lighten-6 mt-3"
+    style="width: 100%;"
+>
+Tambah sekarang</button>
+	</form>
+
+</div>
+
+@end
+

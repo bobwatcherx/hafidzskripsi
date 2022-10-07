@@ -1,0 +1,112 @@
+@layout('layouts/main')
+@set('title', 'Home page')
+
+@section('body')
+@include("partials/navbar")
+
+
+
+
+<div class="container">
+<h1 class="is-size-3">User data</h1>
+    <table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th style="display: none">id</th>
+            <th>nama Pengguna</th>
+            <th>status</th>
+            <th>aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+           @each((d,index) in data)
+        <tr>
+          <td style="display:none">{{ d.id }}</td>
+              <td>{{ d.nama }}</td>
+              <td>{{ d.status }}</td>
+              <td>
+                <button class="button is-primary">
+                  aksi
+              </button></td>
+        </tr>
+            @end
+
+    </tbody>
+</table>
+</div>
+  <script>
+    let dataform = []
+    $(document).ready( function () {
+    var Table = $('#table_id').DataTable({
+        destroy: true,
+            scrollX: true,
+            searching: true,
+            lengthChange: true,
+            pageLength: 5,
+            lengthMenu: [5, 10, 25, 50, 100],
+            paging: true,
+            pagingType: "simple_numbers" ,
+            info: true,
+            autoWidth: false,
+            select:true
+    });
+    $('#table_id tbody').on('click', 'tr', function () {
+  let bookingData = Table.row(this).data();
+  console.log(bookingData)
+  if(bookingData){
+  dataform.push(bookingData)
+    Swal.fire({
+    
+    buttons:false,
+  title: '<b>Edit atau hapus user ? </b>',
+  icon: 'info',
+  html:
+  `
+  </div>
+  <br/>nama user : ` + bookingData[1] + `<br/>` +  
+  `status : ` + bookingData[3] + `<br/>` +  
+  `<br/>`+ 
+  `
+  <div style="display:flex,
+  flex-direction:row,
+  justify-content:space-between">
+
+  <button class="button is-primary"
+  onclick="edituserfunc()"
+  >Edit</button>
+  <button class="button is-danger"
+  onclick="deleteuserfunc()"
+  >Delete</button>
+  </div>
+
+  `
+  ,
+showCancelButton: false,
+showConfirmButton: false,
+  focusConfirm: false,
+  
+})
+  }
+ });
+} );
+    function edituserfunc(){
+      dataform.forEach(function(p){
+        let editid = p[0]
+        window.location.href = "/edituser/" + editid
+      })
+    }
+    function printfunc(){
+       dataform.forEach(function(p){
+        let id = p[0]
+        window.open("http://localhost:3333/printproduct/" + id,"blank")
+      })
+    }
+    function deleteuserfunc(){
+       dataform.forEach(function(p){
+        let delid = p[0]
+        window.location.href = "/deleteuser/" + delid
+      })
+    }
+  </script>
+@end
+

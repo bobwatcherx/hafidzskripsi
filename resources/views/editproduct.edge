@@ -1,0 +1,50 @@
+@layout('layouts/main')
+@set('title', 'Home page')
+
+@section('body')
+
+<div class="container"  >
+	<a href="{{ route("/") }}" class="btn red white-text">
+		Batalkan Edit
+	</a>
+<br/>
+<h1 class="is-size-3">Edit product</h1>
+@each(d in data)
+	<form method="post" action="/editproses">
+		<input type="hidden" name="id"
+		value="{{ d.id }}">
+		nama : <input 
+	value="{{ d.nama_barang }}"
+	required
+	name="nama_barang"
+	class="input is-primary" type="text" placeholder="Primary input">
+	<br/>
+		deskripsi : <input 
+	required
+	name="deskripsi"
+	value="{{ d.deskripsi }}"
+	class="input is-primary" type="text" placeholder="Primary input">
+	<br/>
+		harga : <input 
+	required
+	name="harga"
+	value="{{ d.harga }}"
+	class="input is-primary" type="number" placeholder="Primary input">
+	<br/>
+		stok : <input 
+	required
+	name="stok"
+	value="{{ d.stok }}"
+	class="input is-primary" type="text" placeholder="Primary input">
+	<br/>
+	<br/>
+	<button
+	style="width:100%;margin-bottom: 20px;"
+	 class="btn purple darken-2" 
+	type="submit">
+	Update
+	</button>
+	</form>
+@end
+</div>
+@end

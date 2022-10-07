@@ -1,0 +1,39 @@
+  <nav style="background: white;color: black;">
+    <div class="nav-wrapper" >
+      <a href="#" class="brand-logo"
+       style="margin-left: 30px;color: black;">
+         <b>NETSUI</b>
+       </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down" >
+        <li>
+            <a class="nav-link" 
+style="color: black;"
+            aria-current="page"
+      href={{ route("/") }}
+            >Home</a>
+          </li>
+            <li>
+            <a class="nav-link" 
+style="color: black;"
+            aria-current="page"
+      href={{ route("/lihattransaksi") }}
+            >Transaksi</a>
+          </li>
+          <li class="nav-item">
+             @if(isUser !== true)
+  <a class="nav-link"
+style="color: black;"
+      href={{ route("/users") }}
+      >
+        User
+      </a>
+@end
+          </li>
+          <a href="/logout" type="button"
+          class="btn waves-effect waves-light"
+          style="background:red;color:white" 
+          >Logout</a>
+      </ul>
+
+    </div>
+  </nav>

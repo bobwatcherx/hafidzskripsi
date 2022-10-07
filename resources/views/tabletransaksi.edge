@@ -1,0 +1,203 @@
+@layout('layouts/main')
+@set('title', 'Home page')
+
+@section('body')
+@include("partials/navbar")
+
+<div class="container animate__animated animate__fadeInUp">
+	<div class="row">
+		<div class="col s12">
+			<h5>
+			<b>Riwayat transaksi</b>
+		</h5>
+		</div>
+		<div class="col s4">
+			<a href="/transaksi"
+			style="margin-top:20px"
+			class="btn waves waves-effect
+			purple darken-5
+			"
+			>
+				Buat Transaksi
+			</a>
+		</div>
+	</div>
+	 <table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th style="display: none">id</th>
+            <th>pembeli</th>
+            <th>nama barang</th>
+            <th>jumlah pesanan</th>
+            <th>deskripsi brng</th>
+            <th>tgl_kirim</th>
+            <th>alamat pembeli</th>
+            <th>Harga Total</th>
+            <th>Aksi</th>
+            <th style="display: none">harga pcs</th>
+        </tr>
+    </thead>
+    <tbody>
+           @each((d,index) in data)
+        <tr>
+          <td style="display:none">{{ d.id }}</td>
+              <td>{{ d.pembeli }}</td>
+              <td>{{ d.nama_barang }}</td>
+              <td>{{ d.jumlah_brng }}</td>
+              <td>{{ d.deskripsi }}</td>
+              <td>{{ d.tgl_kirim }}</td>
+              <td>{{ d.alamat }}</td>
+              <td
+              style="background: orange;color: white;
+              font-weight: bold;"
+              >{{ d.harga_total }}</td>
+          <td style="display:none">{{ d.harga_pcs }}</td>
+
+              <td>
+             <button type="button" class="btn btn-primary btn-rounded">Aksi</button>
+            </td>
+        </tr>
+            @end
+
+    </tbody>
+</table>
+</div>
+<script>
+    let dataform = []
+    $(document).ready( function () {
+    var Table = $('#table_id').DataTable({
+        destroy: true,
+            scrollX: true,
+            searching: true,
+            lengthChange: true,
+            pageLength: 5,
+            lengthMenu: [5, 10, 25, 50, 100],
+            paging: true,
+            pagingType: "simple_numbers" ,
+            info: true,
+            autoWidth: false,
+            select:true
+    });
+    $('#table_id tbody').on('click', 'tr', function () {
+  let bookingData = Table.row(this).data();
+  console.log(bookingData)
+  if(bookingData){
+  dataform.push(bookingData)
+    Swal.fire({
+    
+    buttons:false,
+  title: '<b>Mau edit atau hapus ?</b>',
+  icon: 'warning',
+  html:
+  `
+
+  </div>
+  <br/>nama pembeli : ` + bookingData[1] + `<br/>` +  
+  `nama barang : ` + bookingData[2] + `<br/>` +  
+  `harga : ` + bookingData[7] + `<br/>` +  
+  `deskripsi : ` + bookingData[4] + `<br/>` + 
+  `<br/>`+ 
+  `
+  <div style="display:flex,
+  flex-direction:row,
+  justify-content:space-between">
+
+  <button class="btn cyan accent-5"
+  onclick="editfunc()"
+  >Edit</button>
+  <button 
+  onclick="deleteproductfunc()"
+  class="btn red darken-2">Delete</button>
+  </div>
+
+  `
+  ,
+showCancelButton: false,
+showConfirmButton: false,
+  focusConfirm: false,
+})
+  }
+ });
+} );
+    function editfunc(){
+      dataform.forEach(function(p){
+       Swal.fire({
+  title: 'Edit pembeli ' + p[1],
+  icon: 'info',
+     width: '100%',
+  html:
+   	`
+<div>
+<form method="post" action="/edittransaksi/${p[0]}">
+ <div class="input-field col s6">
+          <input placeholder="Placeholder" id="pembeli" type="text" 
+          value="${p[1]}"
+          required
+          name="editname"
+          class="validate">
+          <label for="pembeli">Nama pembeli</label>
+  </div>
+   <div class="input-field col s6">
+          <input placeholder="Placeholder" id="alamat" type="text" class="validate"
+          name="editalamat"
+          value="${p[6]}"
+          required
+          >
+          <label for="alamat">Alamat</label>
+  </div>
+   <div class="input-field col s6">
+          <input placeholder="Placeholder" id="tgl_kirim" type="date"
+          name="edittglkirim"
+          value="${p[5]}"
+          required
+           class="validate">
+          <label for="tgl_kirim">Alamat</label>
+  </div>
+   <div class="input-field col s6">
+          <input placeholder="Placeholder" id="jumlah_brng" type="text"
+          name="editjumlah_brng"
+          value="${p[3]}"
+          required
+           class="validate">
+          <label for="jumlah_brng">jumlah barang</label>
+  </div>
+  <input type="hidden"
+  name="hargatotal"
+  value="${p[7]}">
+ <input type="hidden"
+  name="hargapcs"
+  value="${p[8]}">
+  <button
+   class="btn orange waves waves-effect">
+  Update Data ${p[1]}
+  </button>
+</form>
+</div>
+
+   `,
+  showCancelButton: false,
+showConfirmButton: false,
+  focusConfirm: false,
+  
+})
+        })
+    }
+   
+    function deleteproductfunc(){
+      if (confirm("apa yakin menghapus ?") == true){
+          dataform.forEach(function(p){
+        let delid = p[0]
+        window.location.href = "/deletetransaksi/" + delid
+      })
+      }
+
+    }
+     function disableBack() { window.history.forward(); }
+        setTimeout("disableBack()", 0);
+        window.onunload = function () { null };
+      window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+    window.history.go(1);
+};  
+  </script>
+@end
